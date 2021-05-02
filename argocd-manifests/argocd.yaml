@@ -1,0 +1,45 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ArgoCD
+metadata:
+  finalizers:
+  - argoproj.io/finalizer
+  name: argocd
+spec:
+  controller:
+    processors: {}
+  dex:
+    openShiftOAuth: true
+  grafana:
+    enabled: false
+    ingress:
+      enabled: false
+    route:
+      enabled: false
+  ha:
+    enabled: false
+  initialSSHKnownHosts: {}
+  #image: quay.io/argoproj/argocd:v2.0.1
+  prometheus:
+    enabled: false
+    ingress:
+      enabled: false
+    route:
+      enabled: false
+  rbac: {}
+  redis: {}
+  repo: {}
+  server:
+    autoscale:
+      enabled: false
+    grpc:
+      ingress:
+        enabled: false
+    ingress:
+      enabled: false
+    route:
+      enabled: true
+    service:
+      type: ""
+  tls:
+    ca: {}
+  usersAnonymousEnabled: true
