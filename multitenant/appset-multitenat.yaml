@@ -8,7 +8,7 @@ spec:
       repoURL: https://github.com/jtudelag/argocd-appset-playground.git
       revision: HEAD
       directories:
-      - path: multitenant/*/*/config.json
+      - path: multitenant/**/**/config.json
   template:
     metadata:
       name: '{{app.name}}-{{app.tenant}}-{{app.env}}'
