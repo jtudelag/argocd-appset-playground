@@ -1,0 +1,8 @@
+{
+    "app": {
+      "name": "quarkus",
+      "version": "0.0.2",
+      "env": "test",
+      "tenant": "tenant2"
+    }
+}

@@ -1,0 +1,37 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: multitenant-quarkus
+spec:
+  generators:
+  - git:
+      repoURL: https://github.com/jtudelag/argocd-appset-playground.git
+      revision: HEAD
+      directories:
+      - path: multitenant/**/config.json
+  template:
+    metadata:
+      name: '{{app.name}}-{{app.tenant}}-{{app.env}}'
+    spec:
+      project: default
+      source:
+        helm:
+          parameters:
+          - name: build.enabled
+            value: "false"
+          - name: deploy.route.tls.enabled
+            value: "true"
+          - name: image.name
+            value: quay.io/ablock/gitops-helm-quarkus
+        chart: quarkus
+        repoURL: https://redhat-developer.github.io/redhat-helm-charts
+        targetRevision: '{{app.version}}'
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: 'jtudela-{{app.name}}-{{app.tenant}}-{{app.env}}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
