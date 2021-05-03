@@ -5,6 +5,9 @@ metadata:
   - argoproj.io/finalizer
   name: argocd
 spec:
+  applicationSet:
+    image: quay.io/argocdapplicationset/argocd-applicationset
+    version: v0.1.0
   controller:
     processors: {}
   dex:
