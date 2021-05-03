@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: sample-addons2
+spec:
+  generators:
+  - git:
+      repoURL: https://github.com/jtudelag/argocd-appset-playground.git
+      revision: HEAD
+      directories:
+      - path: addons/**
+  template:
+    metadata:
+      name: '{{path.basename}}'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/jtudelag/argocd-appset-playground.git
+        targetRevision: HEAD
+        path: '{{path}}'
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{path.basename}}'
+      syncPolicy:
+        automated:
+          prune: false
+          selfHeal: true
+        #syncOptions:
+        #- CreateNamespace=true
